@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="639.0" prefWidth="1162.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.bistroculinaryacademyorm.controller.CourseFormController">
+   <children>
+      <Pane layoutX="58.0" layoutY="27.0" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #D7D7D7; -fx-background-radius: 10;">
+         <children>
+            <ImageView fitHeight="39.89" fitWidth="41.68" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assests/icon/icons8-course-assign-60%20(1).png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Label layoutX="137.0" layoutY="42.0" text="Add Courses">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Line endX="975.0" layoutX="159.0" layoutY="102.0" startX="-117.66667175292969" />
+      <TextField fx:id="txtID" editable="false" layoutX="754.0" layoutY="38.0" onAction="#txtIDOnAction" onKeyPressed="#txtIDOnKeyPressed" prefHeight="42.0" prefWidth="346.0" style="-fx-border-color: #727374; -fx-border-radius: 12px; -fx-background-color: white; -fx-background-radius: 12px;">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
+      <Pane layoutX="808.0" layoutY="126.0" prefHeight="479.0" prefWidth="332.0" style="-fx-background-color: white;">
+         <children>
+            <JFXTextField fx:id="txtName" labelFloat="true" layoutX="50.0" layoutY="143.0" onAction="#txtNameOnAction" onKeyPressed="#txtNameOnKeyPressed" prefHeight="42.0" prefWidth="230.0" promptText="Course Name" />
+            <JFXTextField fx:id="txtDuration" labelFloat="true" layoutX="50.0" layoutY="198.0" onAction="#txtDurationOnAction" onKeyPressed="#txtDurationOnKeyPressed" prefHeight="42.0" prefWidth="229.0" promptText="Duration" />
+            <JFXTextField fx:id="txtCourseFee" labelFloat="true" layoutX="52.0" layoutY="256.0" onAction="#txtCourseFeeOnAction" onKeyPressed="#txtCourseFeeOnKeyPressed" prefHeight="42.0" prefWidth="230.0" promptText="Course Fee" />
+            <JFXButton layoutX="39.0" layoutY="419.0" onAction="#btnAddOnAction" onMouseEntered="#btnAddOnMouseEntered" onMouseExited="#btnAddOnMouseExited" prefHeight="31.0" prefWidth="260.0" style="-fx-background-radius: 10; -fx-background-color: #88C273;" text="Add" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="174.0" layoutY="374.0" onAction="#btnClearOnAction" onMouseEntered="#btnAddOnMouseEntered" onMouseExited="#btnAddOnMouseExited" prefHeight="31.0" prefWidth="128.0" style="-fx-background-radius: 10; -fx-background-color: #4A628A;" text="Clear" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="34.0" layoutY="374.0" onAction="#btnUpdateOnAction" onMouseEntered="#btnUpdateOnMouseEntered" onMouseExited="#btnUpdateOnMouseExited" prefHeight="31.0" prefWidth="128.0" style="-fx-background-radius: 10; -fx-background-color: FC8F54;" text="Update" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+            <TextField alignment="CENTER" layoutX="24.0" layoutY="63.0" onKeyPressed="#searchOnKeyPressed" prefHeight="25.0" prefWidth="158.0" promptText="Course Id" styleClass="field1" stylesheets="@../../../../../../../../../../../ORM/the-culinary-academy/src/main/resources/lk/ijse/theculinaryacademy/assets/css/style.css" />
+            <JFXButton layoutX="200.0" layoutY="63.0" onAction="#btnSearchOnAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #219B9D; -fx-background-radius: 10;" text="Search" textFill="WHITE">
+               <font>
+                  <Font name="Unispace-Bold" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </Pane>
+      <TableView fx:id="tblCourses" layoutX="40.0" layoutY="110.0" prefHeight="501.0" prefWidth="750.0" styleClass="table" stylesheets="@../../../../../../../../../../../ORM/the-culinary-academy/src/main/resources/lk/ijse/theculinaryacademy/assets/css/style.css">
+         <columns>
+            <TableColumn prefWidth="90.39999771118164" text="Course Id" />
+            <TableColumn minWidth="0.0" prefWidth="268.0" text="Course Name" />
+            <TableColumn prefWidth="127.0" text="Duration" />
+            <TableColumn prefWidth="163.0" text="Fee" />
+            <TableColumn prefWidth="98.0" text="Action" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
