@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
+    private Session session;
 
     @Override
     public List<User> getAll() throws Exception {
@@ -38,5 +39,10 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public boolean delete(String id) throws Exception {
         return false;
+    }
+
+    @Override
+    public void setSession(Session session) {
+        this.session = session;
     }
 }

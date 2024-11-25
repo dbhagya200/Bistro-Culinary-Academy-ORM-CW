@@ -11,7 +11,12 @@ import lk.ijse.bistroculinaryacademyorm.util.NavigateTo;
 import java.io.IOException;
 
 public class DashboardController {
-
+    @FXML
+    private ImageView imgUsers1;
+    @FXML
+    private Label lblUsers1;
+    @FXML
+    private Pane paymentPane;
     @FXML
     private Pane booksPane;
 
@@ -93,7 +98,11 @@ public class DashboardController {
 
     @FXML
     void btnDashboardOnAction(ActionEvent event) {
-
+        try {
+            NavigateTo.parent("/lk/ijse/bistroculinaryacademyorm/view/dashboard.fxml",dashbord);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -132,5 +141,13 @@ public class DashboardController {
     void btnUsersOnAction(ActionEvent event) {
 
     }
+    @FXML
 
+     void btnPaymentOnAction(ActionEvent actionEvent) {
+        try {
+            NavigateTo.children("/lk/ijse/bistroculinaryacademyorm/view/payment.fxml",customroot);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

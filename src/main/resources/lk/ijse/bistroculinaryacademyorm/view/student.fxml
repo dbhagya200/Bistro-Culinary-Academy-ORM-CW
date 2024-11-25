@@ -31,7 +31,7 @@
          </font>
       </Label>
       <Line endX="975.0" layoutX="159.0" layoutY="102.0" startX="-117.66667175292969" />
-      <TextField fx:id="txtID" editable="false" layoutX="754.0" layoutY="38.0" onAction="#txtIDOnAction" onKeyPressed="#txtIDOnKeyPressed" prefHeight="42.0" prefWidth="346.0" style="-fx-border-color: #727374; -fx-border-radius: 12px; -fx-background-color: white; -fx-background-radius: 12px;">
+      <TextField fx:id="txtID" layoutX="754.0" layoutY="38.0" onAction="#txtIDOnAction" onKeyPressed="#txtIDOnKeyPressed" prefHeight="42.0" prefWidth="346.0" style="-fx-border-color: #727374; -fx-border-radius: 12px; -fx-background-color: white; -fx-background-radius: 12px;">
          <font>
             <Font size="15.0" />
          </font>
@@ -51,28 +51,28 @@
       </TableView>
       <Pane layoutX="808.0" layoutY="126.0" prefHeight="479.0" prefWidth="332.0" style="-fx-background-color: white;">
          <children>
-            <JFXTextField fx:id="txtName" labelFloat="true" layoutX="50.0" layoutY="80.0" onAction="#txtNameOnAction" onKeyPressed="#txtNameOnKeyPressed" prefHeight="42.0" prefWidth="230.0" promptText="Name" />
-            <JFXTextField fx:id="txtNIC" labelFloat="true" layoutX="50.0" layoutY="135.0" onAction="#txtNICOnAction" onKeyPressed="#txtNICOnKeyPressed" prefHeight="42.0" prefWidth="229.0" promptText="NIC NO" />
-            <JFXTextField fx:id="txtAddress" labelFloat="true" layoutX="52.0" layoutY="193.0" onAction="#txtAddressOnAction" onKeyPressed="#txtAddressOnKeyPressed" prefHeight="42.0" prefWidth="230.0" promptText="Address" />
-            <JFXTextField fx:id="txtphone" labelFloat="true" layoutX="53.0" layoutY="250.0" onAction="#txtPhoneOnAction" onKeyPressed="#txtPhoneOnKeyPressed" prefHeight="42.0" prefWidth="230.0" promptText="Contact No" />
-            <JFXTextField fx:id="txtEmail" labelFloat="true" layoutX="54.0" layoutY="308.0" onAction="#txtEmailOnAction" onKeyPressed="#txtEmailOnKeyPressed" prefHeight="42.0" prefWidth="230.0" promptText="Email Address" />
-            <JFXButton layoutX="39.0" layoutY="419.0" onAction="#btnAddOnAction" onMouseEntered="#btnAddOnMouseEntered" onMouseExited="#btnAddOnMouseExited" prefHeight="31.0" prefWidth="260.0" style="-fx-background-radius: 10; -fx-background-color: #88C273;" text="Add" textFill="WHITE">
+            <JFXTextField fx:id="txtName" labelFloat="true" layoutX="50.0" layoutY="68.0" onAction="#txtNameOnAction" onKeyPressed="#txtNameOnKeyPressed" prefHeight="40.0" prefWidth="230.0" promptText="Name" />
+            <JFXTextField fx:id="txtNIC" labelFloat="true" layoutX="50.0" layoutY="132.0" onAction="#txtNICOnAction" onKeyPressed="#txtNICOnKeyPressed" prefHeight="40.0" prefWidth="229.0" promptText="NIC NO" />
+            <JFXTextField fx:id="txtAddress" labelFloat="true" layoutX="52.0" layoutY="193.0" onAction="#txtAddressOnAction" onKeyPressed="#txtAddressOnKeyPressed" prefHeight="40.0" prefWidth="230.0" promptText="Address" />
+            <JFXTextField fx:id="txtphone" labelFloat="true" layoutX="53.0" layoutY="254.0" onAction="#txtPhoneOnAction" onKeyPressed="#txtPhoneOnKeyPressed" prefHeight="40.0" prefWidth="230.0" promptText="Contact No" />
+            <JFXTextField fx:id="txtEmail" labelFloat="true" layoutX="54.0" layoutY="316.0" onAction="#txtEmailOnAction" onKeyPressed="#txtEmailOnKeyPressed" prefHeight="40.0" prefWidth="230.0" promptText="Email Address" />
+            <JFXButton layoutX="39.0" layoutY="424.0" onAction="#btnAddOnAction" onMouseEntered="#btnAddOnMouseEntered" onMouseExited="#btnAddOnMouseExited" prefHeight="31.0" prefWidth="260.0" style="-fx-background-radius: 10; -fx-background-color: #88C273;" text="Add" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="174.0" layoutY="374.0" onAction="#btnClearOnAction" onMouseEntered="#btnAddOnMouseEntered" onMouseExited="#btnAddOnMouseExited" prefHeight="31.0" prefWidth="128.0" style="-fx-background-radius: 10; -fx-background-color: #4A628A;" text="Clear" textFill="WHITE">
+            <JFXButton layoutX="174.0" layoutY="379.0" onAction="#btnClearOnAction" onMouseEntered="#btnAddOnMouseEntered" onMouseExited="#btnAddOnMouseExited" prefHeight="31.0" prefWidth="128.0" style="-fx-background-radius: 10; -fx-background-color: #4A628A;" text="Clear" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="34.0" layoutY="374.0" onAction="#btnUpdateOnAction" onMouseEntered="#btnUpdateOnMouseEntered" onMouseExited="#btnUpdateOnMouseExited" prefHeight="31.0" prefWidth="128.0" style="-fx-background-radius: 10; -fx-background-color: FC8F54;" text="Update" textFill="WHITE">
+            <JFXButton layoutX="34.0" layoutY="379.0" onAction="#btnUpdateOnAction" onMouseEntered="#btnUpdateOnMouseEntered" onMouseExited="#btnUpdateOnMouseExited" prefHeight="31.0" prefWidth="128.0" style="-fx-background-radius: 10; -fx-background-color: FC8F54;" text="Update" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </JFXButton>
-            <TextField alignment="CENTER" layoutX="20.0" layoutY="23.0" onKeyPressed="#searchOnKeyPressed" prefHeight="25.0" prefWidth="158.0" promptText="Contact Number" styleClass="field1" stylesheets="@../../../../../../../../../../../ORM/the-culinary-academy/src/main/resources/lk/ijse/theculinaryacademy/assets/css/style.css" />
-            <JFXButton layoutX="196.0" layoutY="23.0" onAction="#btnSearchOnAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #219B9D; -fx-background-radius: 10;" text="Search" textFill="WHITE">
+            <TextField alignment="CENTER" layoutX="20.0" layoutY="17.0" onKeyPressed="#searchOnKeyPressed" prefHeight="25.0" prefWidth="158.0" promptText="Contact Number" styleClass="field1" stylesheets="@../../../../../../../../../../../ORM/the-culinary-academy/src/main/resources/lk/ijse/theculinaryacademy/assets/css/style.css" />
+            <JFXButton layoutX="196.0" layoutY="17.0" onAction="#btnSearchOnAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #219B9D; -fx-background-radius: 10;" text="Search" textFill="WHITE">
                <font>
                   <Font name="Unispace-Bold" size="15.0" />
                </font>

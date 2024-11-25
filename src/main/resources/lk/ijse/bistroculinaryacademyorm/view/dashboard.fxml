@@ -15,7 +15,7 @@
       <JFXButton layoutX="-29.0" layoutY="-3.0" text=" " />
       <Pane prefHeight="719.0" prefWidth="222.0" style="-fx-background-color: #7D0A0A;">
          <children>
-            <Pane fx:id="catalogPane" layoutY="272.0" prefHeight="48.0" prefWidth="215.0" style="-fx-background-color: #7D0A0A;">
+            <Pane fx:id="catalogPane" layoutY="268.0" prefHeight="48.0" prefWidth="215.0" style="-fx-background-color: #7D0A0A;">
                <children>
                   <Label fx:id="lblCatalog" layoutX="85.0" layoutY="15.0" text="Courses" textFill="WHITE">
                      <font>
@@ -43,7 +43,7 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane fx:id="booksPane" layoutY="347.0" prefHeight="48.0" prefWidth="215.0" style="-fx-background-color: #7D0A0A;">
+            <Pane fx:id="booksPane" layoutY="342.0" prefHeight="48.0" prefWidth="215.0" style="-fx-background-color: #7D0A0A;">
                <children>
                   <Label fx:id="lblBooks" layoutX="85.0" layoutY="15.0" text="Students" textFill="WHITE">
                      <font>
@@ -57,7 +57,7 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane fx:id="usersPane" layoutY="425.0" prefHeight="48.0" prefWidth="215.0" style="-fx-background-color: #7D0A0A;">
+            <Pane fx:id="usersPane" layoutX="2.0" layoutY="418.0" prefHeight="48.0" prefWidth="215.0" style="-fx-background-color: #7D0A0A;">
                <children>
                   <Label fx:id="lblUsers" layoutX="85.0" layoutY="15.0" text="Users" textFill="WHITE">
                      <font>
@@ -87,9 +87,9 @@
             </Pane>
             <JFXButton layoutX="3.0" layoutY="562.0" minHeight="48.0" onAction="#btnLogOutOnAction" prefHeight="48.0" prefWidth="215.0" text=" " />
             <JFXButton layoutY="197.0" minHeight="48.0" onAction="#btnDashboardOnAction" prefHeight="48.0" prefWidth="222.0" text=" " />
-            <JFXButton layoutY="272.0" minHeight="48.0" onAction="#btnProgramsOnAction" prefWidth="222.7" text=" " />
-            <JFXButton layoutY="347.0" minHeight="48.0" onAction="#btnStudentOnAction" prefWidth="222.7" text=" " />
-            <JFXButton layoutY="425.0" minHeight="48.0" onAction="#btnUsersOnAction" prefWidth="222.7" text=" " />
+            <JFXButton layoutY="268.0" minHeight="48.0" onAction="#btnProgramsOnAction" prefWidth="222.7" text=" " />
+            <JFXButton layoutY="342.0" minHeight="48.0" onAction="#btnStudentOnAction" prefWidth="222.7" text=" " />
+            <JFXButton layoutX="2.0" layoutY="418.0" minHeight="48.0" onAction="#btnUsersOnAction" prefWidth="222.7" text=" " />
             <ImageView fitHeight="85.0" fitWidth="104.0" layoutX="55.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assests/img/logo_white.png" />
@@ -108,6 +108,21 @@
                   <Font name="FreeSerif" size="17.0" />
                </font>
             </Label>
+            <Pane fx:id="paymentPane" layoutY="486.0" prefHeight="48.0" prefWidth="215.0" style="-fx-background-color: #7D0A0A;">
+               <children>
+                  <Label fx:id="lblUsers1" layoutX="85.0" layoutY="15.0" text="Payment" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="imgUsers1" fitHeight="24.0" fitWidth="24.0" layoutX="41.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assests/icon/icons8-payment-50-White.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <JFXButton layoutX="-1.0" layoutY="487.0" minHeight="48.0" onAction="#btnPaymentOnAction" prefWidth="222.7" text=" " />
          </children>
       </Pane>
       <Pane layoutX="223.0" prefHeight="75.0" prefWidth="1164.0" style="-fx-background-color: white;">

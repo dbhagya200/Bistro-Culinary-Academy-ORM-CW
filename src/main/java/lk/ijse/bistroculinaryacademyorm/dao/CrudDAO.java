@@ -3,7 +3,7 @@ package lk.ijse.bistroculinaryacademyorm.dao;
 import java.util.List;
 
 public interface CrudDAO<T> extends SuperDAO{
-    public List<T> getAll()  throws Exception ;
+    public List<T> getAll()  throws Exception ,ClassNotFoundException ;
     public boolean add(T entity)  throws Exception;
     public boolean update(T entity)  throws Exception ;
     public boolean exist(String id)  throws Exception ;

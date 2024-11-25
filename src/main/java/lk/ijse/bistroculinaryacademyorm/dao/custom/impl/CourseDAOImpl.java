@@ -1,7 +1,8 @@
 package lk.ijse.bistroculinaryacademyorm.dao.custom.impl;
 
 import lk.ijse.bistroculinaryacademyorm.config.SessionFactoryConfig;
-import lk.ijse.bistroculinaryacademyorm.dao.custom.StudentDAO;
+import lk.ijse.bistroculinaryacademyorm.dao.custom.CourseDAO;
+import lk.ijse.bistroculinaryacademyorm.entity.Course;
 import lk.ijse.bistroculinaryacademyorm.entity.Student;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -9,17 +10,19 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class StudentDAOImpl implements StudentDAO {
+public class CourseDAOImpl implements CourseDAO {
     private Session session;
+
+
     @Override
-    public List<Student> getAll() throws Exception {
-        String hql = "FROM Student";
-        Query<Student> query = session.createQuery(hql, Student.class);
+    public List<Course> getAll() throws Exception {
+        String hql = "FROM Course";
+        Query<Course> query = session.createQuery(hql, Course.class);
         return query.list();
     }
 
     @Override
-    public boolean add(Student entity) throws Exception {
+    public boolean add(Course entity) throws Exception {
         Session session = SessionFactoryConfig.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
         session.save(entity);
@@ -29,7 +32,7 @@ public class StudentDAOImpl implements StudentDAO {
     }
 
     @Override
-    public boolean update(Student entity) throws Exception {
+    public boolean update(Course entity) throws Exception {
         return false;
     }
 

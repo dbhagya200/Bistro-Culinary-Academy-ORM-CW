@@ -1,5 +1,7 @@
 package lk.ijse.bistroculinaryacademyorm.bo;
 
+import lk.ijse.bistroculinaryacademyorm.bo.custom.impl.CourseBOImpl;
+import lk.ijse.bistroculinaryacademyorm.bo.custom.impl.StudentBOImpl;
 import lk.ijse.bistroculinaryacademyorm.bo.custom.impl.UserBOImpl;
 
 public class BOFactory {
@@ -11,7 +13,7 @@ public class BOFactory {
     }
 
     public enum BOTypes{
-        USER
+        USER,STUDENT,COURSE
     }
 
     //Object creation logic for BO objects
@@ -19,6 +21,10 @@ public class BOFactory {
         switch (types){
             case USER:
                 return new UserBOImpl();
+            case STUDENT:
+                return new StudentBOImpl();
+            case COURSE:
+                return new CourseBOImpl();
             default:
                 return null;
         }

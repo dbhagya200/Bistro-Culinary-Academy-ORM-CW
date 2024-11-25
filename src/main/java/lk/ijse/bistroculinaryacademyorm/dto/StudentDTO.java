@@ -10,9 +10,12 @@ import lombok.NoArgsConstructor;
 @Data
 public class StudentDTO {
     private String StudentId;
-    private String Name;
-    private String address;
-    private String contact;
+    private String StudentName;
+    private String StudentNIC;
+    private String StudentAddress;
+    private String StudentContact;
+    private String StudentEmail;
 
-    private User user;
+
+//    private User user;
 }
