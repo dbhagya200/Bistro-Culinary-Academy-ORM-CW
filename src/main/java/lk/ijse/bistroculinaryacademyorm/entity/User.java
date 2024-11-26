@@ -16,14 +16,17 @@ import lombok.NoArgsConstructor;
 public class User {
 
     @Id
-    @Column(name = "userID")
-    private String userID;
-
     @Column(name = "userName")
     private String userName;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "userPassword")
     private String userPassword;
+
+    @Column(name = "confirmPassword")
+    private String confirmPassword;
 
     @Column(name = "jobRole")
     private String jobRole;

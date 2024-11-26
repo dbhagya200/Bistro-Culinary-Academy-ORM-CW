@@ -17,16 +17,30 @@ public class BOFactory {
     }
 
     //Object creation logic for BO objects
-    public SuperBO getBO(BOTypes types){
-        switch (types){
+//    public SuperBO getBO(BOTypes types){
+//        switch (types){
+//            case USER:
+//                return new UserBOImpl();
+//            case STUDENT:
+//                return new StudentBOImpl();
+//            case COURSE:
+//                return new CourseBOImpl();
+//            default:
+//                return null;
+//        }
+//    }
+
+    public <T extends SuperBO> T getBO(BOTypes types) {
+        switch (types) {
             case USER:
-                return new UserBOImpl();
+                return (T) new UserBOImpl();
             case STUDENT:
-                return new StudentBOImpl();
+                return (T) new StudentBOImpl();
             case COURSE:
-                return new CourseBOImpl();
+                return (T) new CourseBOImpl();
             default:
                 return null;
         }
+
     }
 }

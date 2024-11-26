@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "student")
-public class Student implements Serializable {
+public class Student  {
 
     @Id
     @Column(name = "studentID")
@@ -35,5 +35,6 @@ public class Student implements Serializable {
 
     @Column(name = "studentEmail")
     private String studentEmail;
+
 
 }

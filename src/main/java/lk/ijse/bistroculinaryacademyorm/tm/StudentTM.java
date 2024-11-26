@@ -10,8 +10,10 @@ import lombok.NoArgsConstructor;
 public class StudentTM {
     private String studentId;
     private String studentName;
+    private String studentNIC;
     private String studentAddress;
-    private String studentEmail;
     private String studentContact;
+    private String studentEmail;
+
 
 }

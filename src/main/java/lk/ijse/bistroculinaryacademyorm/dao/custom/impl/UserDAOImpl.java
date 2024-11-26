@@ -2,9 +2,11 @@ package lk.ijse.bistroculinaryacademyorm.dao.custom.impl;
 
 import lk.ijse.bistroculinaryacademyorm.config.SessionFactoryConfig;
 import lk.ijse.bistroculinaryacademyorm.dao.custom.UserDAO;
+import lk.ijse.bistroculinaryacademyorm.entity.Student;
 import lk.ijse.bistroculinaryacademyorm.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -13,7 +15,9 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public List<User> getAll() throws Exception {
-        return null;
+        String hql = "FROM User";
+        Query<User> query = session.createQuery(hql, User.class);
+        return query.list();
     }
 
     @Override

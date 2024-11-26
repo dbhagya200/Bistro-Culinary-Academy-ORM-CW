@@ -18,14 +18,27 @@ public class DAOFactory {
         USER,STUDENT,COURSE
     }
 
-    public SuperDAO getDAO(DAOTypes types){
+//    public SuperDAO getDAO(DAOTypes types){
+//        switch (types) {
+//            case USER:
+//                return new UserDAOImpl();
+//            case STUDENT:
+//                return new StudentDAOImpl();
+//            case COURSE:
+//                return new CourseDAOImpl();
+//            default:
+//                return null;
+//        }
+//    }
+
+    public <T extends SuperDAO> T getDao(DAOTypes types){
         switch (types) {
             case USER:
-                return new UserDAOImpl();
+                return (T) new UserDAOImpl();
             case STUDENT:
-                return new StudentDAOImpl();
+                return (T) new StudentDAOImpl();
             case COURSE:
-                return new CourseDAOImpl();
+                return (T) new CourseDAOImpl();
             default:
                 return null;
         }

@@ -42,7 +42,7 @@
             <Font size="12.0" />
          </font>
       </Label>
-      <JFXButton layoutX="574.0" layoutY="449.0" onAction="#btnSignUpOnAction" onMouseEntered="#btnSignUpOnMouseEntered" onMouseExited="#btnSignUpOnMouseExited" prefHeight="42.0" prefWidth="267.0" style="-fx-background-radius: 15px; -fx-background-color: #7D0A0A;" text="SIGN UP" textFill="#fcfafa">
+      <JFXButton layoutX="569.0" layoutY="443.0" onAction="#btnSignUpOnAction" onMouseEntered="#btnSignUpOnMouseEntered" onMouseExited="#btnSignUpOnMouseExited" prefHeight="42.0" prefWidth="267.0" style="-fx-background-radius: 15px; -fx-background-color: #7D0A0A;" text="SIGN UP" textFill="#fcfafa">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -95,13 +95,10 @@
             <Font name="FreeSerif" size="33.0" />
          </font>
       </Label>
-      <JFXPasswordField fx:id="txtPassword" labelFloat="true" layoutX="705.0" layoutY="344.0" onAction="#txtPasswordOnAction" onKeyPressed="#txtPasswordOnKeyPressed" prefHeight="42.0" prefWidth="170.0" promptText="Password" />
-      <JFXTextField fx:id="txtFirstName" labelFloat="true" layoutX="509.0" layoutY="212.0" onAction="#txtFirstNameOnAction" onKeyPressed="#txtFirstNameOnKeyPressed" prefHeight="42.0" prefWidth="170.0" promptText="First name" />
-      <JFXTextField fx:id="txtLastName" labelFloat="true" layoutX="707.0" layoutY="211.0" onAction="#txtLastNameOnAction" onKeyPressed="#txtLastNameOnKeyPressed" prefHeight="42.0" prefWidth="170.0" promptText="Last name" />
-      <JFXTextField fx:id="txtContactNo" labelFloat="true" layoutX="509.0" layoutY="284.0" onAction="#txtContactNoOnAction" onKeyPressed="#txtContactNoOnKeyPressed" prefHeight="42.0" prefWidth="170.0" promptText="Contact No" />
-      <JFXTextField fx:id="txtEmail" labelFloat="true" layoutX="705.0" layoutY="283.0" onAction="#txtEmailOnAction" onKeyPressed="#txtEmailOnKeyPressed" prefHeight="42.0" prefWidth="170.0" promptText="Email" />
-      <JFXTextField fx:id="txtUsername" labelFloat="true" layoutX="510.0" layoutY="345.0" onAction="#txtUsernameOnAction" onKeyPressed="#txtUsernameOnKeyPressed" prefHeight="42.0" prefWidth="170.0" promptText="Username" />
-      <JFXRadioButton fx:id="admin" layoutX="570.0" layoutY="410.0" text="Admin">
+      <JFXPasswordField fx:id="txtPassword" labelFloat="true" layoutX="518.0" layoutY="305.0" onAction="#txtPasswordOnAction" onKeyPressed="#txtPasswordOnKeyPressed" prefHeight="42.0" prefWidth="170.0" promptText="Password" />
+      <JFXTextField fx:id="txtEmail" labelFloat="true" layoutX="712.0" layoutY="232.0" onAction="#txtEmailOnAction" onKeyPressed="#txtEmailOnKeyPressed" prefHeight="42.0" prefWidth="170.0" promptText="Email" />
+      <JFXTextField fx:id="txtUsername" labelFloat="true" layoutX="517.0" layoutY="232.0" onAction="#txtUsernameOnAction" onKeyPressed="#txtUsernameOnKeyPressed" prefHeight="42.0" prefWidth="170.0" promptText="Username" />
+      <JFXRadioButton fx:id="admin" layoutX="567.0" layoutY="388.0" text="Admin">
          <toggleGroup>
             <ToggleGroup fx:id="admintype" />
          </toggleGroup>
@@ -112,7 +109,7 @@
             <Color red="0.7490196228027344" green="0.7176470756530762" blue="0.7176470756530762" />
          </unSelectedColor>
       </JFXRadioButton>
-      <JFXRadioButton fx:id="coordinator" layoutX="715.0" layoutY="410.0" text="Coordinator">
+      <JFXRadioButton fx:id="coordinator" layoutX="712.0" layoutY="388.0" text="Coordinator">
          <toggleGroup>
             <ToggleGroup fx:id="admintype" />
          </toggleGroup>
@@ -123,5 +120,6 @@
             <Color red="1.0" green="0.8705882430076599" blue="0.3490196168422699" />
          </selectedColor>
       </JFXRadioButton>
+      <JFXPasswordField fx:id="txtConfirm" labelFloat="true" layoutX="712.0" layoutY="305.0" onAction="#txtConfirmOnAction" onKeyPressed="#txtConfirmOnKeyPressed" prefHeight="42.0" prefWidth="170.0" promptText="Confirm Password" />
    </children>
 </AnchorPane>

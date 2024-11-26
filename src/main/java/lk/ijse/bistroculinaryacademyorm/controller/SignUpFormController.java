@@ -47,20 +47,15 @@ public class SignUpFormController {
     @FXML
     private Label lblUsernameAlert;
 
-    @FXML
-    private AnchorPane rootNodeUp;
 
     @FXML
-    private JFXTextField txtContactNo;
+    private AnchorPane rootNodeUp;
 
     @FXML
     private JFXTextField txtEmail;
 
     @FXML
-    private JFXTextField txtFirstName;
-
-    @FXML
-    private JFXTextField txtLastName;
+    private JFXPasswordField txtConfirm;
 
     @FXML
     private JFXPasswordField txtPassword;
@@ -68,7 +63,8 @@ public class SignUpFormController {
     @FXML
     private JFXTextField txtUsername;
 
-    UserBO userBO = (UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.USER);
+//    UserBO userBO = (UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.USER);
+    UserBO userBO = BOFactory.getBoFactory().getBO(BOFactory.BOTypes.USER);
 
     @FXML
     void btnSignInOnAction(ActionEvent event) {
@@ -81,23 +77,28 @@ public class SignUpFormController {
 
     @FXML
     void btnSignUpOnAction(ActionEvent event) throws IOException {
-        String fname = txtFirstName.getText();
-        String lname = txtLastName.getText();
-        String contact = txtContactNo.getText();
-        String email = txtEmail.getText();
         String username = txtUsername.getText();
+        String email = txtEmail.getText();
         String pass = txtPassword.getText();
+        String confirm = txtConfirm.getText();
 
 
-        if ((admin.isSelected()||coordinator.isSelected())) {
+        if ((admin.isSelected()||coordinator.isSelected())||pass.equals(confirm)) {
 
-                userBO.saveUser(new UserDTO());
+                boolean isSaved=userBO.saveUser(new UserDTO(
+                        username,
+                        email,
+                        pass,
+                        confirm,
+                        gettype()
+                ));
+
             NavigateTo.parent("/lk/ijse/bistroculinaryacademyorm/view/signIn_form.fxml",rootNodeUp);
 
             new Alert(Alert.AlertType.ERROR, "please sign in").show();
 
         }else {
-            new Alert(Alert.AlertType.WARNING, "select admin type").show();
+            new Alert(Alert.AlertType.WARNING, "select one admin type").show();
         }
 
     }
@@ -120,13 +121,15 @@ public class SignUpFormController {
 
     }
 
+
+
     @FXML
-    void txtContactNoOnAction(ActionEvent event) {
+    void txtConfirmOnAction(ActionEvent event) {
 
     }
 
     @FXML
-    void txtContactNoOnKeyPressed(KeyEvent event) {
+    void txtConfirmOnKeyPressed(KeyEvent event) {
 
     }
 
@@ -140,25 +143,7 @@ public class SignUpFormController {
 
     }
 
-    @FXML
-    void txtFirstNameOnAction(ActionEvent event) {
 
-    }
-
-    @FXML
-    void txtFirstNameOnKeyPressed(KeyEvent event) {
-
-    }
-
-    @FXML
-    void txtLastNameOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void txtLastNameOnKeyPressed(KeyEvent event) {
-
-    }
 
     @FXML
     void txtPasswordOnAction(ActionEvent event) {

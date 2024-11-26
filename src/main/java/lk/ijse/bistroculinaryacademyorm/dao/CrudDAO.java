@@ -1,5 +1,6 @@
 package lk.ijse.bistroculinaryacademyorm.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface CrudDAO<T> extends SuperDAO{
@@ -8,4 +9,5 @@ public interface CrudDAO<T> extends SuperDAO{
     public boolean update(T entity)  throws Exception ;
     public boolean exist(String id)  throws Exception ;
     public boolean delete(String id)  throws Exception ;
+
 }
