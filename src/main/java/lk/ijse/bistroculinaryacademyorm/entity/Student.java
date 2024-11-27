@@ -1,40 +1,43 @@
 package lk.ijse.bistroculinaryacademyorm.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@ToString
+@Getter
+@Setter
 @Entity
-@Table(name = "student")
-public class Student  {
-
+public class Student {
     @Id
-    @Column(name = "studentID")
-    private String studentID;
+    private String sid;
+    private String name;
+    private String address;
+    private String tel;
+    private String email;
 
-    @Column(name = "studentName")
-    private String studentName;
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
+    private List<Enrollment> enrollmentList = new ArrayList<>();
 
-    @Column(name = "studentNIC")
-    private String studentNIC;
+    public void addEnrollment(Enrollment enrollment) {
+        enrollmentList.add(enrollment);
+        enrollment.setStudent(this);
+    }
 
-    @Column(name = "studentAddress")
-    private String studentAddress;
+    public void removeEnrollment(Enrollment enrollment) {
+        enrollmentList.remove(enrollment);
+        enrollment.setStudent(null);
+    }
 
-    @Column(name = "studentContact")
-    private String studentContact;
-
-    @Column(name = "studentEmail")
-    private String studentEmail;
-
-
+    public Student(String sid, String name, String address, String tel, String email) {
+        this.sid = sid;
+        this.name = name;
+        this.address = address;
+        this.tel = tel;
+        this.email = email;
+    }
 }

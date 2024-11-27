@@ -8,6 +8,7 @@ module lk.ijse.bistroculinaryacademyorm {
     requires java.naming;
     requires java.transaction.xa;
     requires static lombok;
+    requires jbcrypt;
 
 
     opens lk.ijse.bistroculinaryacademyorm.controller to javafx.fxml;

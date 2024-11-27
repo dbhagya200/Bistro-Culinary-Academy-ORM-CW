@@ -1,16 +1,18 @@
 package lk.ijse.bistroculinaryacademyorm.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class UserDTO {
+@ToString
+@EqualsAndHashCode
+@Getter
+@Setter
+
+public class UserDTO{
+    private String userid;
     private String username;
-    private String email;
     private String password;
-    private String confirmPassword;
-    private String jobrole;
+    private String email;
+    private String role;
 }

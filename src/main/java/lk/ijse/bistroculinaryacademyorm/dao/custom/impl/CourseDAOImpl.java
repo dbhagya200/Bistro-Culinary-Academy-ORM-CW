@@ -1,9 +1,9 @@
 package lk.ijse.bistroculinaryacademyorm.dao.custom.impl;
 
-import lk.ijse.bistroculinaryacademyorm.config.SessionFactoryConfig;
+
+import lk.ijse.bistroculinaryacademyorm.config.FactoryConfiguration;
 import lk.ijse.bistroculinaryacademyorm.dao.custom.CourseDAO;
 import lk.ijse.bistroculinaryacademyorm.entity.Course;
-import lk.ijse.bistroculinaryacademyorm.entity.Student;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -14,33 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CourseDAOImpl implements CourseDAO {
-    private Session session;
-
-
     @Override
-    public List<Course> getAll() throws Exception {
-        ArrayList<Course> courses = new ArrayList<>();
-        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
-            courses = (ArrayList<Course>) session.createQuery("FROM Course").list();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return courses;
-    }
-
-    @Override
-    public boolean add(Course entity) throws Exception {
-        Session session = SessionFactoryConfig.getInstance().getSession();
-        Transaction transaction = session.beginTransaction();
+    public boolean save(Course entity) throws Exception {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction tx = session.beginTransaction();
         session.save(entity);
-        transaction.commit();
+        tx.commit();
         session.close();
         return true;
     }
 
     @Override
     public boolean update(Course entity) throws Exception {
-        Session session = SessionFactoryConfig.getInstance().getSession();
+        Session session = FactoryConfiguration.getInstance().getSession();
         Transaction tx = session.beginTransaction();
         session.update(entity);
         tx.commit();
@@ -49,16 +35,11 @@ public class CourseDAOImpl implements CourseDAO {
     }
 
     @Override
-    public boolean exist(String id) throws Exception {
-        return false;
-    }
-
-    @Override
-    public boolean delete(String id) throws Exception {
-        Session session = SessionFactoryConfig.getInstance().getSession();
+    public boolean delete(String ID) throws Exception {
+        Session session = FactoryConfiguration.getInstance().getSession();
         Transaction tx = session.beginTransaction();
 
-        Course course = session.get(Course.class, id);
+        Course course = session.get(Course.class, ID);
         if (course != null) {
             session.delete(course);
             tx.commit();
@@ -72,24 +53,20 @@ public class CourseDAOImpl implements CourseDAO {
     }
 
     @Override
-    public void setSession(Session session) {
-        this.session = session;
+    public List<Course> getAll() throws SQLException, ClassNotFoundException {
+        List<Course> all = new ArrayList<>();
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+        all = session.createQuery("from Course").list();
+        transaction.commit();
+        session.close();
+        return all;
     }
 
     @Override
-    public Course search(String id) {
-        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
-            return session.get(Course.class, id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @Override
-    public String generateNewID() {
-        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
-            String lastID = (String) session.createQuery("SELECT c.course_id FROM Course c ORDER BY c.course_id DESC")
+    public String generateNewID() throws SQLException, ClassNotFoundException, IOException {
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            String lastID = (String) session.createQuery("SELECT c.cid FROM Course c ORDER BY c.cid DESC")
                     .setMaxResults(1)
                     .uniqueResult();
 
@@ -99,42 +76,24 @@ public class CourseDAOImpl implements CourseDAO {
             } else {
                 return "C001";
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
     @Override
-    public boolean isCourseExists(String id) throws IOException {
-        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
-            String hql = "SELECT COUNT(c.course_id) FROM Course c WHERE c.course_id = :id";
+    public boolean IdExists(String id) throws SQLException, ClassNotFoundException {
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            String hql = "SELECT COUNT(c.cid) FROM Course c WHERE c.cid = :id";
             Query<Long> query = session.createQuery(hql, Long.class);
             query.setParameter("id", id);
             Long count = query.uniqueResult();
             return count != null && count > 0;
         }
-
     }
 
-    @Override
-    public int getCourseCount() throws SQLException, ClassNotFoundException {
-        int courseCount = 0;
-        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
-            Query<Long> query = session.createQuery("SELECT COUNT(c) FROM Course c", Long.class);
-            Long result = query.uniqueResult();
-            if (result != null) {
-                courseCount = result.intValue();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new SQLException("Failed to fetch course count from the database", e);
-        }
-        return courseCount;
-    }
 
-    @Override
+
     public Course getCourseById(String courseId) throws Exception {
-        Session session = SessionFactoryConfig.getInstance().getSession();
+        Session session = FactoryConfiguration.getInstance().getSession();
         Transaction tx = session.beginTransaction();
 
         try {
@@ -155,10 +114,10 @@ public class CourseDAOImpl implements CourseDAO {
         Transaction transaction = null;
         Course course = null;
 
-        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
             transaction = session.beginTransaction();
 
-            Query<Course> query = session.createQuery("FROM Course c WHERE c.course_id = :id", Course.class);
+            Query<Course> query = session.createQuery("FROM Course c WHERE c.cid = :id", Course.class);
             query.setParameter("id", courseId);
             course = query.uniqueResult();
 
@@ -171,5 +130,29 @@ public class CourseDAOImpl implements CourseDAO {
         return course;
     }
 
+    @Override
+    public List<String> getAllCourseIds() throws SQLException, ClassNotFoundException {
+        List<String> courseIds = new ArrayList<>();
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            Query<String> query = session.createQuery("SELECT c.cid FROM Course c", String.class);
+            courseIds = query.list();
+        }
+        return courseIds;
+    }
 
+    @Override
+    public int getCourseCount() throws SQLException, ClassNotFoundException {
+        int courseCount = 0;
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            Query<Long> query = session.createQuery("SELECT COUNT(c) FROM Course c", Long.class);
+            Long result = query.uniqueResult();
+            if (result != null) {
+                courseCount = result.intValue();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("Failed to fetch course count from the database", e);
+        }
+        return courseCount;
+    }
 }

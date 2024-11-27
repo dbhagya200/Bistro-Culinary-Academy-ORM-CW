@@ -2,8 +2,6 @@ package lk.ijse.bistroculinaryacademyorm.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import com.mysql.cj.Session;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,399 +11,298 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import lk.ijse.bistroculinaryacademyorm.bo.BOFactory;
-import lk.ijse.bistroculinaryacademyorm.bo.SuperBO;
-import lk.ijse.bistroculinaryacademyorm.bo.custom.StudentBO;
-import lk.ijse.bistroculinaryacademyorm.config.SessionFactoryConfig;
+import javafx.scene.layout.AnchorPane;
+import lk.ijse.bistroculinaryacademyorm.bo.BoFactory;
+import lk.ijse.bistroculinaryacademyorm.bo.custom.StudentBo;
+import lk.ijse.bistroculinaryacademyorm.bo.custom.impl.StudentBoImpl;
 import lk.ijse.bistroculinaryacademyorm.dto.StudentDTO;
-import lk.ijse.bistroculinaryacademyorm.entity.Student;
-import lk.ijse.bistroculinaryacademyorm.tm.StudentTM;
-import lombok.SneakyThrows;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import lk.ijse.bistroculinaryacademyorm.entity.tm.StudentTm;
+import lk.ijse.bistroculinaryacademyorm.util.Regex;
+import lk.ijse.bistroculinaryacademyorm.util.TextField;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class StudentController implements Initializable {
 
+    @FXML
+    private JFXButton btnaddstudent;
 
     @FXML
-    private TableColumn<?, ?> colAction;
+    private JFXButton btnclear;
 
     @FXML
-    private TableColumn<?, ?> colAddress;
+    private JFXButton btndelete;
 
     @FXML
-    private TableColumn<?, ?> colContact;
+    private JFXButton btnsearchstudent;
 
     @FXML
-    private TableColumn<?, ?> colEmail;
+    private JFXButton btnupdate;
 
     @FXML
-    private TableColumn<?, ?> colName;
+    private TableColumn<?, ?> coladdress;
 
     @FXML
-    private TableColumn<?, ?> colid;
+    private TableColumn<?, ?> colemail;
 
     @FXML
-    private TableView<StudentTM> tblStudent;
+    private TableColumn<?, ?> colstudentid;
 
     @FXML
-    private JFXTextField txtAddress;
+    private TableColumn<?, ?> colstudentname;
 
     @FXML
-    private JFXTextField txtEmail;
+    private TableColumn<?, ?> coltel;
 
     @FXML
-    private TextField txtID;
+    private AnchorPane studentform;
 
     @FXML
-    private JFXTextField txtNIC;
+    private TableView<StudentTm> tblstudent;
 
     @FXML
-    private JFXTextField txtName;
+    private JFXTextField txtaddress;
 
     @FXML
-    private JFXTextField txtphone;
+    private JFXTextField txtemail;
+
     @FXML
-    private TextField txtSearchContact;
+    private JFXTextField txtsearch;
+
     @FXML
-    private JFXButton btnDelete;
+    private JFXTextField txtstudentid;
+
+    @FXML
+    private JFXTextField txtstudentname;
+
+    @FXML
+    private JFXTextField txttel;
+    ObservableList<StudentTm> observableList;
     String ID;
-    String userid = "U001";
+    StudentBo studentBo = (StudentBoImpl) BoFactory.getBoFactory().getBo(BoFactory.BoType.Student);
 
-    ObservableList<StudentTM> observableList;
-
-//    StudentBO  studentBO = (StudentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.STUDENT);
-    StudentBO studentBO = BOFactory.getBoFactory().getBO(BOFactory.BOTypes.STUDENT);
-
-    private List<StudentDTO> studentList = new ArrayList<>();
-
-    @SneakyThrows
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadAllStudents();
+        try {
+            getAll();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         setCellValueFactory();
-        generateNextId();
-
+        generateNextUserId();
     }
 
-    private void generateNextId() {
+    private void generateNextUserId() {
         String nextId = null;
-        nextId = studentBO.generateNewStudentID();
-        txtID.setText(nextId);
-    }
-
-    @FXML
-    void btnAddOnAction(ActionEvent event) throws Exception {
-
-
-        if (txtID.getText().trim().isEmpty() || txtName.getText().trim().isEmpty() ||
-                txtNIC.getText().trim().isEmpty() || txtAddress.getText().trim().isEmpty() ||
-                txtEmail.getText().trim().isEmpty() || txtphone.getText().trim().isEmpty()) {
-            new Alert(Alert.AlertType.WARNING, "Please fill all fields").show();
-        } else {
-            studentBO.addStudent(new StudentDTO(
-                    txtID.getText(),
-                    txtName.getText(),
-                    txtNIC.getText(),
-                    txtAddress.getText(),
-                    txtphone.getText(),
-                    txtEmail.getText()
-
-            ));
-
-            clearFields();
-            loadAllStudents();
-            generateNextId();
-            new Alert(Alert.AlertType.CONFIRMATION, "Student Added").show();
-
+        try {
+            nextId = studentBo.generateNewStudentID();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-//        tblStudent.getItems().add(
-//                new StudentTM(
-//                        txtID.getText(),
-//                        txtName.getText(),
-//                        txtNIC.getText(),
-//                        txtAddress.getText(),
-//                        txtphone.getText(),
-//                        txtEmail.getText()
-//                )
-//        );
-//        loadAllStudents();
-//        clearFields();
-    }
-
-    private void clearFields() {
-        txtID.clear();
-        txtName.clear();
-        txtNIC.clear();
-        txtAddress.clear();
-        txtEmail.clear();
-        txtphone.clear();
-        generateNextId();
-
+        txtstudentid.setText(nextId);
     }
 
     private void setCellValueFactory() {
-        colid.setCellValueFactory(new PropertyValueFactory<>("studentId"));
-        colName.setCellValueFactory(new PropertyValueFactory<>("studentName"));
-        colAddress.setCellValueFactory(new PropertyValueFactory<>("studentAddress"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<>("studentEmail"));
-        colContact.setCellValueFactory(new PropertyValueFactory<>("studentContact"));
+        colstudentid.setCellValueFactory(new PropertyValueFactory<>("sid"));
+        colstudentname.setCellValueFactory(new PropertyValueFactory<>("name"));
+        coladdress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        coltel.setCellValueFactory(new PropertyValueFactory<>("tel"));
+        colemail.setCellValueFactory(new PropertyValueFactory<>("email"));
     }
-    private void loadAllStudents() throws Exception {
-//        ObservableList<StudentTM> obList = FXCollections.observableArrayList();
-//        tblStudent.getItems().clear();
-//
-//        try {
-//            ArrayList<StudentDTO> allStudents = (ArrayList<StudentDTO>) studentBO.getAllStudents();
-//            for (StudentDTO dto : allStudents) {
-//                tblStudent.getItems().add(new StudentTM(dto.getStudentId(),
-//                        dto.getStudentName(), dto.getStudentNIC(), dto.getStudentAddress(),
-//                        dto.getStudentContact(), dto.getStudentEmail()));
-//
-//
-//            }
-//
-//        }catch (Exception e){
-//            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-//            System.out.println("selectedItem = " + tblStudent.getSelectionModel().getSelectedItem());
-//        }
 
+    private void getAll() throws SQLException, ClassNotFoundException {
         observableList = FXCollections.observableArrayList();
-        List<StudentDTO> allStudent = studentBO.getAllStudents();
+        List<StudentDTO> allStudent = studentBo.getAllStudent();
 
         for (StudentDTO studentDTO : allStudent){
-            observableList.add(new StudentTM(
-                    studentDTO.getStudentId(),
-                    studentDTO.getStudentName(),
-                    studentDTO.getStudentNIC(),
-                    studentDTO.getStudentAddress(),
-                    studentDTO.getStudentContact(),
-                    studentDTO.getStudentEmail()
-            ));
+            observableList.add(new StudentTm(studentDTO.getSid(),studentDTO.getName(),studentDTO.getAddress(),studentDTO.getTel(),studentDTO.getEmail()));
         }
-        tblStudent.setItems(observableList);
-    }
-
-
-    @FXML
-    void btnAddOnMouseEntered(MouseEvent event) {
-
+        tblstudent.setItems(observableList);
     }
 
     @FXML
-    void btnAddOnMouseExited(MouseEvent event) {
-
-    }
-
-    @FXML
-    void btnClearOnAction(ActionEvent event) {
-        clearFields();
-    }
-
-    @FXML
-    void btnSearchOnAction(ActionEvent event) {
-        String contact = txtSearchContact.getText();
+    void btnaddstudentOnAction(ActionEvent event) throws Exception {
+        String id = txtstudentid.getText();
+        String name = txtstudentname.getText();
+        String address = txtaddress.getText();
+        String tel = txttel.getText();
+        String email = txtemail.getText();
 
 
-        try {
-            Student student = studentBO.searchStudent(contact);
-            if (student != null) {
-                txtID.setText(student.getStudentID());
-                txtName.setText(student.getStudentName());
-                txtNIC.setText(student.getStudentNIC());
-                txtAddress.setText(student.getStudentAddress());
-                txtphone.setText(student.getStudentContact());
-                txtEmail.setText(student.getStudentEmail());
-                txtSearchContact.clear();
-
-            } else {
-                new Alert(Alert.AlertType.WARNING, "No student found").show();
-            }
-        } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
-//        String searchText = txtSearchContact.getText().toLowerCase();
-//        ObservableList<StudentTM> filteredList = FXCollections.observableArrayList();
-//
-//        for (StudentTM studenttm : observableList) {
-//            if (studenttm.getStudentContact().toLowerCase().contains(searchText)) {
-//                filteredList.add(studenttm);
-//            }
-//        }
-//        tblStudent.setItems(filteredList);
-    }
-
-    @FXML
-    void btnUpdateOnAction(ActionEvent event) throws Exception {
-//        boolean isUpdated = studentBO.updateStudent(new StudentDTO(
-//                txtID.getText(),
-//                txtName.getText(),
-//                txtNIC.getText(),
-//                txtAddress.getText(),
-//                txtphone.getText(),
-//                txtEmail.getText()
-//        ));
-//        if (isUpdated) {
-//            new Alert(Alert.AlertType.CONFIRMATION, "Student Updated").show();
-//            clearFields();
-//        } else {
-//            new Alert(Alert.AlertType.ERROR, "Student Not Updated").show();
-//        }
-//        StudentTM selectedItem = new StudentTM(
-//                txtID.getText(),
-//                txtName.getText(),
-//                txtNIC.getText(),
-//                txtAddress.getText(),
-//                txtphone.getText(),
-//                txtEmail.getText()
-//        );
-//        System.out.println("selectesItem = " + selectedItem);
-        String id = txtID.getText();
-        String name = txtName.getText();
-        String nic = txtNIC.getText();
-        String address = txtAddress.getText();
-        String tel = txtphone.getText();
-        String email = txtEmail.getText();
-
-        if(studentBO.updateStudent(new StudentDTO(id,name,nic,address,tel,email))){
-            new Alert(Alert.AlertType.CONFIRMATION, "Update Successfully!!").show();
+        int validationCode;
+        if (id.isEmpty() || name.isEmpty() || address.isEmpty() || tel.isEmpty() || email.isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Please fill in all fields!").show();
+            return;
         }else {
-            new Alert(Alert.AlertType.ERROR, "Error!!").show();
+            validationCode = isValid();
         }
-        clearFields();
-        loadAllStudents();
+        switch (validationCode) {
+            case 1 -> new Alert(Alert.AlertType.ERROR, "Invalid studentname!").show();
+            case 2 -> new Alert(Alert.AlertType.ERROR, "Invalid email format!").show();
+            case 3 -> new Alert(Alert.AlertType.ERROR, "Invalid address!").show();
+            case 4 -> new Alert(Alert.AlertType.ERROR, "Invalid telephone number!").show();
+            default -> {
+                if (studentBo.StudentIdExists(id)){
+                    new Alert(Alert.AlertType.ERROR, "Student ID " + id + " already exists!").show();
+                    return;
+                }
+                if (studentBo.saveStudent(new StudentDTO(id, name, address, tel, email))) {
+                    clearTextFileds();
+                    generateNextUserId();
+                    getAll();
+                    new Alert(Alert.AlertType.CONFIRMATION, "Saved!!").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Error!!").show();
+                }
+            }
+        }
     }
+
+    private void clearTextFileds() {
+        txtstudentid.clear();
+        txtstudentname.clear();
+        txtaddress.clear();
+        txttel.clear();
+        txtemail.clear();
+        generateNextUserId();
+    }
+
     @FXML
-    void btnDeleteOnAction(ActionEvent event) throws Exception {
+    void btnclearOnAction(ActionEvent event) {
+        clearTextFileds();
+
+    }
+
+    @FXML
+    void btndeleteOnAction(ActionEvent event) throws Exception {
         ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
         ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
         Optional<ButtonType> result = new Alert(Alert.AlertType.INFORMATION, "Are you sure to remove?", yes, no).showAndWait();
 
         if (result.orElse(no) == yes) {
-            if (!studentBO.deleteStudent(txtID.getText())) {
-                new Alert(Alert.AlertType.ERROR, "Error!!").show();
+            try {
+                if (studentBo.findStudentById(ID).getEnrollmentList() != null && !studentBo.findStudentById(ID).getEnrollmentList().isEmpty()) {
+                    new Alert(Alert.AlertType.WARNING, "This student is enrolled in courses and cannot be deleted.").show();
+                    return;
+                }
+
+                if (studentBo.deleteStudent(ID)) {
+                    new Alert(Alert.AlertType.INFORMATION, "Student deleted successfully.").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Failed to delete the student.").show();
+                }
+            } catch (NullPointerException e) {
+                new Alert(Alert.AlertType.ERROR, "Student not found.").show();
+            } catch (Exception e) {
+                new Alert(Alert.AlertType.ERROR, "Unexpected error occurred: " + e.getMessage()).show();
             }
         }
-        generateNextId();
-        clearFields();
-        loadAllStudents();
+        generateNextUserId();
+        clearTextFileds();
+        getAll();
     }
 
     @FXML
-    void btnDeleteOnMouseEntered(MouseEvent event) {
+    void btnsearchstudentOnAction(ActionEvent event) {
+        String searchText = txtsearch.getText().toLowerCase();
+        ObservableList<StudentTm> filteredList = FXCollections.observableArrayList();
 
-    }
-
-    @FXML
-    void btnDeleteOnMouseExited(MouseEvent event) {
-
-    }
-
-
-    @FXML
-    void btnUpdateOnMouseEntered(MouseEvent event) {
-
-    }
-
-    @FXML
-    void btnUpdateOnMouseExited(MouseEvent event) {
-
-    }
-
-    @FXML
-    void searchOnKeyPressed(KeyEvent event) {
-
-    }
-
-    @FXML
-    void txtAddressOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void txtAddressOnKeyPressed(KeyEvent event) {
-
-    }
-
-    @FXML
-    void txtEmailOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void txtEmailOnKeyPressed(KeyEvent event) {
-
-    }
-
-    @FXML
-    void txtIDOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void txtIDOnKeyPressed(KeyEvent event) {
-
-    }
-
-    @FXML
-    void txtNICOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void txtNICOnKeyPressed(KeyEvent event) {
-
-    }
-
-    @FXML
-    void txtNameOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void txtNameOnKeyPressed(KeyEvent event) {
-
-    }
-
-    @FXML
-    void txtPhoneOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void txtPhoneOnKeyPressed(KeyEvent event) {
-
-    }
-    private boolean isValid() {
-        if (txtName.getText() == null || txtName.getText().trim().isEmpty()) {
-            new Alert(Alert.AlertType.WARNING, " Name cannot be empty").show();
-            return false;
-        }if(txtNIC.getText() == null || txtNIC.getText().trim().isEmpty()){
-            new Alert(Alert.AlertType.WARNING, "NIC cannot be empty").show();
-            return false;
+        for (StudentTm studenttm : observableList) {
+            if (studenttm.getSid().toLowerCase().contains(searchText)) {
+                filteredList.add(studenttm);
+            }
         }
-        if (txtAddress.getText() == null || txtAddress.getText().trim().isEmpty()) {
-            new Alert(Alert.AlertType.WARNING, "Address cannot be empty").show();
-            return false;
+        tblstudent.setItems(filteredList);
+    }
+
+    @FXML
+    void btnupdateOnAction(ActionEvent event) throws Exception {
+        String name = txtstudentname.getText();
+        String address = txtaddress.getText();
+        String tel = txttel.getText();
+        String email = txtemail.getText();
+        int validationCode;
+        if (ID.isEmpty() || name.isEmpty() || address.isEmpty() || tel.isEmpty() || email.isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Please fill in all fields!").show();
+            return;
+        }else {
+            validationCode = isValid();
         }
-        if (txtEmail.getText() == null || txtEmail.getText().trim().isEmpty()) {
-            new Alert(Alert.AlertType.WARNING, "Email cannot be empty").show();
-            return false;
+        switch (validationCode) {
+            case 1 -> new Alert(Alert.AlertType.ERROR, "Invalid studentname!").show();
+            case 2 -> new Alert(Alert.AlertType.ERROR, "Invalid email format!").show();
+            case 3 -> new Alert(Alert.AlertType.ERROR, "Invalid address!").show();
+            case 4 -> new Alert(Alert.AlertType.ERROR, "Invalid telephone number!").show();
+            default -> {
+                if (studentBo.updateStudent(new StudentDTO(ID, name, address, tel, email))) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "Update Successfully!!").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Error!!").show();
+                }
+                clearTextFileds();
+                getAll();
+            }
         }
-        if (txtphone.getText() == null || txtphone.getText().trim().isEmpty()) {
-            new Alert(Alert.AlertType.WARNING, "Enter a valid contact number").show();
-            return false;
+    }
+    public void rowOnMouseClicked(MouseEvent mouseEvent) {
+        Integer index = tblstudent.getSelectionModel().getSelectedIndex();
+        if (index <= -1) {
+            return;
         }
-        return true;
+        ID = colstudentid.getCellData(index).toString();
+        txtstudentid.setText(ID);
+        txtstudentname.setText(colstudentname.getCellData(index).toString());
+        txtaddress.setText(coladdress.getCellData(index).toString());
+        txttel.setText(coltel.getCellData(index).toString());
+        txtemail.setText(colemail.getCellData(index).toString());
+    }
+    @FXML
+    void txtaddressOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(TextField.ADDRESS,txtaddress);
+    }
+
+    @FXML
+    void txtemailOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(TextField.EMAIL,txtemail);
+    }
+
+    @FXML
+    void txtsearchOnKeyReleased(KeyEvent event) {
+
+    }
+
+    @FXML
+    void txtstudentidOnKeyReleased(KeyEvent event) {
+
+    }
+
+    @FXML
+    void txtstudentnameOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(TextField.NAME,txtstudentname);
+    }
+
+    @FXML
+    void txttelOnKeyReleased(KeyEvent event) {
+        Regex.setTextColor(TextField.TEL,txttel);
+    }
+    public int isValid() {
+        if (!Regex.setTextColor(TextField.NAME, txtstudentname)) return 1;
+        if (!Regex.setTextColor(TextField.EMAIL, txtemail)) return 2;
+        if (!Regex.setTextColor(TextField.ADDRESS, txtaddress)) return 3;
+        if (!Regex.setTextColor(TextField.TEL, txttel)) return 4;
+        return 0;
     }
 
 }

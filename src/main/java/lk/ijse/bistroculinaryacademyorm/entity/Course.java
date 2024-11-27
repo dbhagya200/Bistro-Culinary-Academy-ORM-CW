@@ -1,40 +1,41 @@
 package lk.ijse.bistroculinaryacademyorm.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import lombok.*;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@ToString
+@Getter
+@Setter
 @Entity
-@Table(name = "course")
-public class Course implements Serializable {
-
-//    @GeneratedValue(generator = "ProgramsIDGenerator")
-//    @GenericGenerator(
-//            name = "ProgramsIDGenerator",
-//            strategy = "lk.ijse.culinaryAcademy.util.ProgramsIDGenerator"
-//    )
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Course {
     @Id
-    @Column(name = "course_id")
-    private String course_id;
-
-    @Column(name = "course_name")
-    private String course_name;
-
-    @Column(name = "duration")
+    private String cid;
+    private String coursename;
     private String duration;
+    private Double fee;
 
-    @Column(name = "course_fee")
-    private double course_fee;
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
+    private List<Enrollment> enrollmentList = new ArrayList<>();
 
+    public void addEnrollment(Enrollment enrollment) {
+        enrollmentList.add(enrollment);
+        enrollment.setCourse(this);  // This ensures the enrollment knows about the course
+    }
 
+    public void removeEnrollment(Enrollment enrollment) {
+        enrollmentList.remove(enrollment);
+        enrollment.setCourse(null); // Break the relationship
+    }
 
-
+    public Course(String cid, String coursename, String duration, Double fee) {
+        this.cid = cid;
+        this.coursename = coursename;
+        this.duration = duration;
+        this.fee = fee;
+    }
 }

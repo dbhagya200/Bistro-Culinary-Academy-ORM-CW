@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="Culinary_Academy_ORM@localhost" uuid="182f9759-9e23-4c2f-bab7-d9c5d9df64d4">
+    <data-source source="LOCAL" name="Culinary_Academy_ORM@localhost" uuid="8ec3c3be-2a76-4e05-8a2a-bbde1a4233fe">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
